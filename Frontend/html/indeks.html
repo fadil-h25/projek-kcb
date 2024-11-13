@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absensi Mahasiswa</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background: url('c:\Users\Asus\Downloads\logo tekom f.jpeg') no-repeat center center fixed; /* Ganti dengan URL gambar */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: rgba(0, 123, 255, 0.8); /* Warna dengan sedikit transparansi */
+    color: white;
+}
+.header .left {
+    font-weight: bold;
+    font-size: 1.4em;
+}
+.header .right {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.table-container {
+    margin: 30px 0; /* Jarak antara header dan tabel */
+    padding: 20px;
+}
+.table-full-width {
+    width: 100%;
+    box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.9); /* Latar belakang putih semi transparan */
+}
+.table thead {
+    background-color: #007bff;
+    color: white;
+}
+.table tbody tr:hover {
+    background-color: hwb(207 78% 5%);
+}
+.table td, .table th {
+    padding: 15px;
+}
+
+    </style>
+
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="left">Absensi</div>
+        <div class="right">Novi Aulia</div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+        <table class="table table-striped table-bordered table-full-width">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Mahasiswa</th>
+                    <th>Mata Kuliah</th>
+                    <th>Nama Dosen</th>
+                    <th>Tanggal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Novi Aulia</td>
+                    <td>Kecerdasan Buatan</td>
+                    <td>Marwan Ramdhany Edy,S.Pd.,M.Kom</td>
+                    <td>2024-10-30</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Novi Aulia</td>
+                    <td>Program Lanjut</td>
+                    <td>Muhammad Fajar B,S.Pd.,M.Pd</td>
+                    <td>2024-10-30</td>
+                </tr>
+                <!-- Tambahkan baris lain sesuai kebutuhan -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

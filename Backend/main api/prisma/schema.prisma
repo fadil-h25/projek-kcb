@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model admin {
+  id       String @id @db.VarChar(36) @default(uuid())
+  nama     String @db.VarChar(100)
+  email    String @db.VarChar(100) @unique
+  password String @db.VarChar(100)
+}
+
+model Mahasiswa {
+  id          String @id @db.VarChar(36) @default(uuid())
+  nama        String @db.VarChar(100)
+  nim         String @db.VarChar(100) @unique
+  email       String @db.VarChar(100) @unique
+  password    String @db.VarChar(100)
+  detail_absen Detail_Absen?
+}
+
+model Dosen {
+  id       String @id @db.VarChar(36) @default(uuid())
+  nama     String @db.VarChar(100)
+  email    String @db.VarChar(100) @unique
+  password String @db.VarChar(100)
+  absen    Absen[]
+}
+
+model Absen {
+  id            Int @id @db.Int @default(autoincrement()) 
+  id_dosen     String @db.VarChar(36)
+  mata_kuliah   String @db.VarChar(100)
+  waktu_dibuat DateTime @db.Timestamp() @default(now())
+  dosen        Dosen @relation(fields: [id_dosen], references: [id])
+  detail_absen Detail_Absen[]
+}
+
+model Detail_Absen {
+  id             Int @id @db.Int @default(autoincrement())
+  id_absen       Int @db.Int
+  id_mahasiswa   String @db.VarChar(36) @unique
+  waktu_diabsen  DateTime @db.Timestamp() @default(now())
+  mahasiswa      Mahasiswa @relation(fields: [id_mahasiswa], references: [id])
+  absen          Absen @relation(fields: [id_absen], references: [id])
+}
+

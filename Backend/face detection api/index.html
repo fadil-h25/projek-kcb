@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Absensi Real-Time</title>
+    <script src="https://docs.opencv.org/master/opencv.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <h1>Absensi Real-Time</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="capture">Ambil Gambar</button>
+    <canvas id="canvas" width="640" height="480" style="display: none"></canvas>
+
+    <script>
+      const video = document.getElementById("video");
+      const canvas = document.getElementById("canvas");
+      const context = canvas.getContext("2d");
+
+      // Mengakses kamera
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream) => {
+          video.srcObject = stream;
+          // Mulai memproses video setiap 2 detik
+          setInterval(processVideo, 2000); // 2000 ms = 2 detik
+        })
+        .catch((err) => {
+          console.error("Gagal mengakses kamera: ", err);
+        });
+
+      function processVideo() {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = context.getImageData(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+        const mat = cv.matFromImageData(imageData);
+        cv.cvtColor(mat, mat, cv.COLOR_RGBA2GRAY);
+        context.putImageData(
+          new ImageData(new Uint8ClampedArray(mat.data), mat.cols, mat.rows),
+          0,
+          0
+        );
+        mat.delete();
+      }
+
+      // Menangani pengambilan gambar
+      document.getElementById("capture").addEventListener("click", () => {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = canvas.toDataURL("image/png");
+
+        // Memeriksa jika data gambar valid
+        if (!imageData) {
+          console.error("Gambar tidak valid");
+          return;
+        }
+
+        // Menggunakan Axios untuk mengirim permintaan POST
+        axios
+          .post("http://localhost:3000/lectures/attendances/1/details", {
+            image: imageData,
+          })
+          .then((response) => {
+            console.log("Response dari server:", response.data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+    </script>
+  </body>
+</html>
