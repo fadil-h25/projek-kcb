@@ -1,10 +1,11 @@
-import React from "react";
-import Alert from "../components/fragments/Alert";
+// import Alert from "../components/fragments/Alert";
+import AdminDashboard from "../components/fragments/adminDashboard";
+import { Alert } from "../components/ui/alert";
 
 const Test = () => {
   return (
     <div>
-      <Alert></Alert>
+      <AdminDashboard></AdminDashboard>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import prisma from "../Database/db.js";
+import { v2 as cloudinary } from "cloudinary";
 
 const findMahasiswaByNim = async (nim) => {
   const mahasiswa = await prisma.mahasiswa.findUnique({
@@ -40,9 +41,32 @@ const findManyMahasiswa = async () => {
   return mahasiswa;
 };
 
+const countMahasiswa = async () => {
+  const jumlahMahasiswa = await prisma.mahasiswa.count();
+
+  return jumlahMahasiswa;
+};
+
+const createMahasiswa = async (nama, nim, email, password) => {
+  console.log("ini nim yang akan di install ", nim);
+
+  const mahasiswa = await prisma.mahasiswa.create({
+    data: {
+      nama,
+      nim,
+      email,
+      password,
+    },
+  });
+
+  return mahasiswa;
+};
+
 export {
   findMahasiswaByNim,
   findManyMahasiswa,
   findMahasiswaById,
   findMahasiswaByEmail,
+  countMahasiswa,
+  createMahasiswa,
 };

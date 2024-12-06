@@ -4,16 +4,36 @@ import { getMahasiswaById } from "../services/studentService";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/Auth";
 import { getDosenById } from "../services/dosenService";
+import { Avatar } from "@/components/ui/avatar";
+import {
+  MenuContent,
+  MenuItem,
+  MenuRoot,
+  MenuTrigger,
+} from "@/components/ui/menu";
+import adminService from "../services/adminService";
 
 const Navbar = () => {
   const { authData } = useContext(AuthContext);
   const [user, setUser] = useState();
   const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.clear();
     navigate("/login");
   };
 
+  const handleSelect = (value) => {
+    console.log("Masuk di handleSelect");
+
+    if (value === "logout") {
+      handleLogout();
+    }
+  };
+
+  const handleProfile = () => {
+    navigate(`dashboard/${authData.id}/profile`);
+  };
   useEffect(() => {
     const fetchMahasiswaById = async (id) => {
       try {
@@ -40,7 +60,22 @@ const Navbar = () => {
       }
     };
 
-    if (authData.role == "dosen") {
+    const fetchAdmin = async (id) => {
+      console.log("Masuk ke fungsi fetchAdminById");
+      try {
+        const response = await adminService.getAdminById(id);
+        console.log("ini isi response : ", response);
+        setUser(response);
+
+        return response;
+      } catch (error) {
+        console.log("gagal oy di Navbar admin ", error.message);
+      }
+    };
+
+    if (authData.role == "admin") {
+      fetchAdmin(authData.id);
+    } else if (authData.role == "dosen") {
       fetchDosenId(authData.id);
     } else if (authData.role == "mahasiswa") {
       fetchMahasiswaById(authData.id);
@@ -73,14 +108,26 @@ const Navbar = () => {
             {(user && user.nim) || (user && user.email)}
           </Text>
         </Box>
-        <Button
-          onClick={handleLogout}
-          bg={"white"}
-          colorScheme="teal"
-          variant="outline"
-        >
-          Logout
-        </Button>
+        <MenuRoot>
+          <MenuTrigger asChild>
+            <Button variant="plain" outline={"none"} width={"0"}>
+              <Avatar
+                name="Segun Adebayo"
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              />
+            </Button>
+          </MenuTrigger>
+          <MenuContent>
+            {authData.role == "mahasiswa" && (
+              <MenuItem mb={"10px"} onClick={handleProfile} value="logout">
+                Profil
+              </MenuItem>
+            )}
+            <MenuItem onClick={handleLogout} value="logout">
+              Logout
+            </MenuItem>
+          </MenuContent>
+        </MenuRoot>
       </Flex>
     </Flex>
   );

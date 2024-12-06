@@ -4,6 +4,7 @@ import { ResponError } from "../Errors/responError.js";
 // import dosenService from "./dosenService.js";
 import { findMahasiswaByEmail } from "../Repositories/mahasiswaRepo.js";
 import { findDosenByEmail } from "../Repositories/dosenRepo.js";
+import { findAdminByEmail } from "../Repositories/adminRepo.js";
 
 const createJwt = (id, role) => {
   const token = jwt.sign(
@@ -23,11 +24,17 @@ const createJwt = (id, role) => {
 };
 
 const login = async (email, password) => {
+  const admin = await findAdminByEmail(email);
   const dosen = await findDosenByEmail(email);
   const mahasiswa = await findMahasiswaByEmail(email);
 
   console.log("ini dosen", dosen);
   console.log("ini mahasiswa", mahasiswa);
+
+  if (admin && admin.password == password) {
+    console.log("masuk admin");
+    return createJwt(admin.id, "admin");
+  }
 
   if (dosen && dosen.password == password) {
     console.log("Masuk ke dosen");

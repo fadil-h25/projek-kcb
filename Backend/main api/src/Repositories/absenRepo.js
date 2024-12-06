@@ -35,4 +35,9 @@ const createAbsen = async (dosenId, mataKuliah) => {
   return absen;
 };
 
-export { findManyAbsenByDosenId, findAbsenById, createAbsen };
+const findManyAbsen = async () => {
+  const absen = await prisma.absen.findMany();
+  return absen;
+};
+
+export { findManyAbsenByDosenId, findAbsenById, createAbsen, findManyAbsen };

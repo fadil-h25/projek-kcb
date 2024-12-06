@@ -35,4 +35,27 @@ const findDosenById = async (id) => {
   return dosen;
 };
 
-export { findDosenByEmail, findManyDosen, findDosenById };
+const countDosen = async () => {
+  const jumlahDosen = await prisma.dosen.count();
+
+  return jumlahDosen;
+};
+
+const createDosen = async (nama, email, password) => {
+  const dosen = await prisma.dosen.create({
+    data: {
+      nama,
+      email,
+      password,
+    },
+  });
+  return dosen;
+};
+
+export {
+  findDosenByEmail,
+  findManyDosen,
+  findDosenById,
+  countDosen,
+  createDosen,
+};

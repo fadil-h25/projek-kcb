@@ -2,12 +2,16 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/Auth.jsx";
 import MahasiswaDashboard from "../components/fragments/mahasiswaDashboard.jsx";
 import DosenDashboard from "../components/fragments/DosenDashboard.jsx";
+import AdminDashboard from "../components/fragments/adminDashboard.jsx";
 
 const Demo = () => {
   const { authData } = useContext(AuthContext);
 
   return (
     <>
+      {authData && authData.role == "admin" && (
+        <AdminDashboard></AdminDashboard>
+      )}
       {authData && authData.role == "dosen" && (
         <DosenDashboard id={authData.id} />
       )}

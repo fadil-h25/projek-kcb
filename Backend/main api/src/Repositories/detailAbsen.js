@@ -78,10 +78,17 @@ const createDetailAbsen = async (absenId, mahasiswaId) => {
   return detailAbsen;
 };
 
+const countAbsen = async () => {
+  const jumlahAbsen = await prisma.absen.count();
+
+  return jumlahAbsen;
+};
+
 export {
   findManyDetailAbsenByAbsenId,
   findDetailAbsenById,
   findManyDetailAbsenByMahasiswaId,
   createDetailAbsen,
   findDetailAbsenByMahasiswaId,
+  countAbsen,
 };

@@ -1,0 +1,103 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Absensi Mahasiswa</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f8ff;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background-color: #007bff;
+        color: white;
+      }
+      .absensi {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .table-container {
+        padding: 20px;
+        margin: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+      th {
+        background-color: #007bff;
+        color: white;
+      }
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+      .add-button {
+        margin-top: 20px;
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="absensi">Absensi</div>
+      <div>Marwan Ramdhany Edy, S.Pd., M.Kom</div>
+    </div>
+
+    <div class="table-container">
+      <h2>Daftar Absensi</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Dosen</th>
+            <th>Mata Kuliah</th>
+            <th>Tanggal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Marwan Ramdhany Edy, S.Pd., M.Kom</td>
+            <td>Pengantar Teknologi Informasi</td>
+            <td>30 Oktober 2024</td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="tambah.html" class="add-button">Tambah Data Absensi</a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+    <script>
+      axios
+        .get(
+          "http://localhost:3000/lectures/attendances/9833b0e6-96cd-11ef-963c-d05f643ae4e4"
+        )
+        .then((response) => {
+          console.log(response.data); // Menampilkan data dari respons
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    </script>
+  </body>
+</html>

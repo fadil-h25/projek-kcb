@@ -21,7 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<RootLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="dashboard/:studentId/profile" element={<Profile />} />
           <Route
             path="dashboard/attendances/:attendanceId/details"
             element={<DetailAbsen />}
