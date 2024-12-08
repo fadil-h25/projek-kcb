@@ -60,9 +60,9 @@ const uploadProfileImg = async (id, file) => {
 
   try {
     cloudinary.config({
-      cloud_name: "dj25fwmvp",
-      api_key: "537579951436223",
-      api_secret: "dB9VZ369AFHc5fQ9nIGQffIouxk",
+      cloud_name: process.env.CLOUD_NAME,
+      api_key: process.env.API_KEY,
+      api_secret: process.env.API_SECRET,
     });
 
     // Upload an image
